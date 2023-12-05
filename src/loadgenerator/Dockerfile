@@ -27,7 +27,13 @@ WORKDIR /loadgen
 COPY --from=builder /install /usr/local
 
 # Add application code.
-COPY locustfile.py .
+COPY locustfile.py /loadgen/
+
+RUN pip install locust
+
+EXPOSE 8089
+
+CMD ["locust", "-f", "locustfile.py"]
 
 # enable gevent support in debugger
 ENV GEVENT_SUPPORT=True

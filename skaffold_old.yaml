@@ -1,4 +1,3 @@
-#the configuration for the minimal deploement
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,8 +22,8 @@ build:
   # must provide a "default repo" using one of the methods described
   # here:
   # https://skaffold.dev/docs/concepts/#image-repository-handling
-  # - image: emailservice
-  #   context: src/emailservice
+  - image: emailservice
+    context: src/emailservice
   - image: productcatalogservice
     context: src/productcatalogservice
   - image: recommendationservice
@@ -43,8 +42,8 @@ build:
       dockerfile: Dockerfile
   - image: frontend
     context: src/frontend
-  # - image: adservice
-  #   context: src/adservice
+  - image: adservice
+    context: src/adservice
   tagPolicy:
     gitCommit: {}
   local:
@@ -89,20 +88,20 @@ profiles:
   - op: add
     path: /manifests/kustomize/paths/1
     value: kustomize/components/network-policies
-# ---
-# apiVersion: skaffold/v3
-# kind: Config
-# metadata:
-#   name: loadgenerator
-# requires:
-# - configs:
-#   - app
-# build:
-#   artifacts:
-#   - image: loadgenerator
-#     context: src/loadgenerator
-# manifests:
-#   rawYaml:
-#   - ./kubernetes-manifests/loadgenerator.yaml
-# deploy:
-#   kubectl: {}
+---
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: loadgenerator
+requires:
+- configs:
+  - app
+build:
+  artifacts:
+  - image: loadgenerator
+    context: src/loadgenerator
+manifests:
+  rawYaml:
+  - ./kubernetes-manifests/loadgenerator.yaml
+deploy:
+  kubectl: {}
